@@ -27,3 +27,9 @@ app.on("window-all-closed", () => {
     app.quit();
   }
 });
+
+app.whenReady().then(() => {
+  ipcMain.handle("isClicked", () => {
+    return "clicked";
+  });
+});
