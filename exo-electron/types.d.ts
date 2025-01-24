@@ -1,11 +1,16 @@
-type Statistics = {
-  //put the object types
+type GameState = {
+  cookies: number;
+  clickValue: number;
+  autoClickers: number;
 };
 
-// type StaticData = {};
-
 interface Window {
-  versions: {
+  electron: {
     isClicked: () => Promise<string>;
+    saveGameState: (
+      cookies: number,
+      clickValue: number,
+      autoClickers: number
+    ) => Promise<void>;
   };
 }

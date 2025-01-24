@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import CookieButton from "./components/cookieButton";
 import StatsDisplay from "./components/StatsDisplay";
 
@@ -10,11 +10,15 @@ function App() {
   const [autoClickers, setAutoClickers] = useState(0);
 
   const handleClick = async () => {
-    const response = await window.versions.isClicked();
+    const response = await window.electron.isClicked();
     setCookies(cookies + clickValue);
     console.log(response);
   };
 
+  // save the game state whenever it changes
+  useEffect(() => {
+    window.electron.saveGameState(cookies, clickValue, autoClickers);
+  }, [cookies, clickValue, autoClickers]);
   return (
     <>
       <div>

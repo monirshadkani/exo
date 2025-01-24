@@ -3,6 +3,7 @@ import path from "path";
 import fs from "fs";
 import { isDev } from "./util.js";
 import { getPreloadPath } from "./pathResolver.js";
+import { saveGameState } from "./database.js";
 
 //the main window
 app.on("ready", () => {
@@ -33,3 +34,12 @@ app.whenReady().then(() => {
     return "clicked";
   });
 });
+
+// handle saving the game state
+ipcMain.handle(
+  //listens for requests from renderer (react)
+  "save-game-state", //channel name
+  (_, cookies: number, clickValue: number, autoClickers: number) => {
+    saveGameState(cookies, clickValue, autoClickers); //calling the function
+  }
+);
