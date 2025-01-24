@@ -30,7 +30,7 @@ function App() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCookies(
-        (prevCookies) => prevCookies + autoClickers + grandmaAddedValue
+        (prevCookies) => prevCookies + autoClickers * grandmaAddedValue
       );
     }, 1000); // add cookies every second
 
