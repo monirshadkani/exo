@@ -11,7 +11,7 @@ db.exec(`
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     cookies INTEGER DEFAULT 0,
     click_value INTEGER DEFAULT 1,
-    auto_clickers INTEGER DEFAULT 0
+    auto_clickers INTEGER DEFAULT 0 
   );
 `);
 
