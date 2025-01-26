@@ -27,3 +27,5 @@ dist-electron
 
 # Ignore local database file
 game.db
+
+.env

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import CookieButton from "./components/cookieButton";
 import StatsDisplay from "./components/StatsDisplay";
-import GrandmaShop from "./components/grandmaShop";
+import GrandmaShop from "./components/GrandmaShop";
 import "./App.css";
 
 function App() {
@@ -35,7 +35,7 @@ function App() {
     }, 1000); // add cookies every second
 
     return () => clearInterval(interval);
-  }, [autoClickers]);
+  });
 
   // save the game state whenever it changes
   useEffect(() => {
