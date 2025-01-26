@@ -1,0 +1,77 @@
+type User {
+  id: Int!
+  username: String!
+  clickValue: Int!
+  totalCookies: Int!
+  shops: [ShopsOnUsers!]!
+}
+
+type Shop {
+  id: Int!
+  name: String!
+  price: Int!
+  addedValue: Int!
+  inflationRate: Float!
+  users: [ShopsOnUsers!]!
+}
+
+type ShopsOnUsers {
+  user: User!
+  userId: Int!
+  shop: Shop!
+  shopId: Int!
+  countShop: Int!
+}
+
+type Query {
+  # Queries for User
+  user(id: Int!): User
+  users: [User!]!
+
+  # Queries for Shop
+  shop(id: Int!): Shop
+  shops: [Shop!]!
+
+  # Queries for ShopsOnUsers
+  shopsOnUsers: [ShopsOnUsers!]!
+  shopsForUser(userId: Int!): [ShopsOnUsers!]!
+}
+
+type Mutation {
+  # Mutations for User
+  createUser(
+    username: String!
+    password: String!
+    clickValue: Int
+    totalCookies: Int
+  ): User!
+  updateUser(
+    id: Int!
+    username: String
+    password: String
+    clickValue: Int
+    totalCookies: Int
+  ): User!
+  deleteUser(id: Int!): User!
+
+  # Mutations for Shop
+  createShop(
+    name: String!
+    price: Int!
+    addedValue: Int!
+    inflationRate: Float!
+  ): Shop!
+  updateShop(
+    id: Int!
+    name: String
+    price: Int
+    addedValue: Int
+    inflationRate: Float
+  ): Shop!
+  deleteShop(id: Int!): Shop!
+
+  # Mutations for ShopsOnUsers
+  assignShopToUser(userId: Int!, shopId: Int!, countShop: Int!): ShopsOnUsers!
+  updateShopsOnUsers(userId: Int!, shopId: Int!, countShop: Int!): ShopsOnUsers!
+  removeShopFromUser(userId: Int!, shopId: Int!): ShopsOnUsers!
+}

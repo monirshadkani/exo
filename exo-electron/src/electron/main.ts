@@ -1,9 +1,13 @@
+import { ApolloServer } from "@apollo/server";
+import { startStandaloneServer } from "@apollo/server/standalone";
+import { readFileSync } from "fs";
+import { PrismaClient } from "@prisma/client";
+import { ApolloContextValue } from "@apollo/client";
 import { app, BrowserWindow, ipcMain } from "electron";
 import path from "path";
 import fs from "fs";
 import { isDev } from "./util.js";
 import { getPreloadPath } from "./pathResolver.js";
-//import { saveGameState } from "./database.js";
 
 //the main window
 app.on("ready", () => {
@@ -43,3 +47,54 @@ app.whenReady().then(() => {
 //     saveGameState(cookies, clickValue, autoClickers); //calling the function
 //   }
 // );
+
+//setting up graphql
+const prisma = new PrismaClient();
+
+// Read the GraphQL schema
+const typeDefs = readFileSync("./src/electron/schema.graphql", "utf-8");
+
+// Define resolvers
+const resolvers = {
+  Query: {
+    users: async () => {
+      return await prisma.user.findMany();
+    },
+    shops: async () => {
+      return await prisma.shop.findMany();
+    },
+    shopsOnUsers: async () => {
+      return await prisma.shopsOnUsers.findMany();
+    },
+  },
+  Mutation: {
+    // Example resolver to create data using Prisma
+    // createGameState: async (_, { state }) => {
+    //   return await prisma.gameState.create({
+    //     data: { state },
+    //   });
+    // },
+  },
+};
+
+// Create and start the Apollo Server
+async function startServer() {
+  const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+  });
+
+  const { url } = await startStandaloneServer(server, {
+    listen: { port: 4000 },
+    context: async () => ({
+      prisma, // Pass the Prisma client to the context
+    }),
+  });
+
+  console.log(`🚀 Server ready at ${url}`);
+}
+
+// Start the server
+startServer().catch((error) => {
+  console.error("Error starting server:", error);
+});

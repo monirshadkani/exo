@@ -2,6 +2,7 @@ type GameState = {
   cookies: number;
   clickValue: number;
   autoClickers: number;
+  name: string;
 };
 
 interface Window {

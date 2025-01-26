@@ -38,9 +38,9 @@ function App() {
   });
 
   // save the game state whenever it changes
-  useEffect(() => {
-    window.electron.saveGameState(cookies, clickValue, autoClickers);
-  }, [cookies, clickValue, autoClickers]);
+  // useEffect(() => {
+  //   window.electron.saveGameState(cookies, clickValue, autoClickers);
+  // }, [cookies, clickValue, autoClickers]);
   return (
     <>
       <div>
