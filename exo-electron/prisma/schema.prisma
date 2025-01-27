@@ -15,6 +15,7 @@ model User {
   clickValue   Int @default(1)
   totalCookies Int @default(0)
   shops ShopsOnUsers[]
+  role    Role     @default(USER)
 }
 
 model Shop {
@@ -34,4 +35,9 @@ model ShopsOnUsers {
   countShop Int
 
   @@id([shopId, userId])
+}
+
+enum Role {
+  USER
+  ADMIN
 }
